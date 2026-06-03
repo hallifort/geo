@@ -1,0 +1,31 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{name}}",
+  "description": "{{description}}",
+  "url": "{{url}}",
+  "applicationCategory": "{{category}}",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "{{price}}",
+    "priceCurrency": "{{currency}}",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "billingDuration": "P1M"
+    }
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "{{org_name}}",
+    "url": "{{org_url}}",
+    "sameAs": ["{{linkedin}}", "{{twitter}}", "{{crunchbase}}"]
+  },
+  "featureList": ["{{feature_1}}", "{{feature_2}}", "{{feature_3}}"],
+  "screenshot": "{{screenshot_url}}",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{rating}}",
+    "reviewCount": "{{review_count}}"
+  }
+}

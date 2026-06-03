@@ -1,0 +1,39 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{name}}",
+  "description": "{{description}}",
+  "url": "{{url}}",
+  "logo": "{{logo_url}}",
+  "image": "{{image_url}}",
+  "telephone": "{{phone}}",
+  "email": "{{email}}",
+  "priceRange": "{{price_range}}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{street}}",
+    "addressLocality": "{{city}}",
+    "addressRegion": "{{region}}",
+    "postalCode": "{{postal_code}}",
+    "addressCountry": "{{country}}"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "{{latitude}}",
+    "longitude": "{{longitude}}"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "{{weekday_open}}",
+      "closes": "{{weekday_close}}"
+    }
+  ],
+  "sameAs": ["{{google_maps}}", "{{yelp}}", "{{facebook}}"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{rating}}",
+    "reviewCount": "{{review_count}}"
+  }
+}

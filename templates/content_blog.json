@@ -1,0 +1,37 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "{{name}}",
+  "description": "{{description}}",
+  "url": "{{url}}",
+  "inLanguage": "{{language}}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{org_name}}",
+    "url": "{{org_url}}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{logo_url}}"
+    },
+    "sameAs": ["{{twitter}}", "{{linkedin}}", "{{mastodon}}"]
+  },
+  "author": {
+    "@type": "Person",
+    "name": "{{author_name}}",
+    "url": "{{author_url}}",
+    "sameAs": ["{{author_twitter}}", "{{author_linkedin}}"]
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "{{post_title}}",
+      "datePublished": "{{date_published}}",
+      "dateModified": "{{date_modified}}",
+      "author": {
+        "@type": "Person",
+        "name": "{{author_name}}"
+      },
+      "url": "{{post_url}}"
+    }
+  ]
+}
