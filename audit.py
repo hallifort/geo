@@ -4,6 +4,7 @@ READ-ONLY, ADDITIVE: produces "add this" recommendations only.
 Never outputs "change this" instructions.
 """
 
+import base64
 import csv
 import json
 import os
@@ -326,6 +327,18 @@ def score_class(score: int) -> str:
     return "score-low"
 
 
+GEO_LOGO_PNG = Path("99f4cc43-7fb4-402d-b52e-576b603eb3ec.png")
+
+
+def _geo_logo_img(height: int = 96) -> str:
+    if GEO_LOGO_PNG.exists():
+        b64 = base64.b64encode(GEO_LOGO_PNG.read_bytes()).decode()
+        src = f"data:image/png;base64,{b64}"
+    else:
+        src = ""
+    return f'<img src="{src}" alt="GEO" style="height:{height}px;width:auto;display:block"/>'
+
+
 def render_html_report(url: str, business_type: str, audit: dict) -> str:
     domain = urlparse(url).netloc
     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
@@ -507,29 +520,7 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
 
   <header style="margin-bottom:var(--space-12);display:flex;align-items:flex-start;gap:var(--space-8)">
     <div style="flex-shrink:0">
-      <svg width="96" height="96" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <!-- left wing outer edge -->
-        <polygon points="100,8 8,75 8,28" fill="#2D35C8"/>
-        <!-- right wing outer edge -->
-        <polygon points="100,8 192,75 192,28" fill="#1A1B6E"/>
-        <!-- left page face (inner) -->
-        <polygon points="8,75 100,8 100,135 8,135" fill="#2D35C8"/>
-        <!-- right page face (inner, darker) -->
-        <polygon points="192,75 100,8 100,135 192,135" fill="#1A1B6E"/>
-        <!-- left eye socket -->
-        <ellipse cx="54" cy="88" rx="32" ry="22" fill="#0D0D0D"/>
-        <!-- right eye socket -->
-        <ellipse cx="146" cy="88" rx="32" ry="22" fill="#0D0D0D"/>
-        <!-- left eyeball (white) -->
-        <ellipse cx="54" cy="88" rx="20" ry="13" fill="#FFFFFF"/>
-        <!-- right eyeball (cobalt) -->
-        <ellipse cx="146" cy="88" rx="20" ry="13" fill="#2D35C8"/>
-        <!-- pupils -->
-        <circle cx="54" cy="88" r="6" fill="#0D0D0D"/>
-        <circle cx="146" cy="88" r="6" fill="#0A0A14"/>
-        <!-- spine -->
-        <polygon points="88,135 112,135 108,210 92,210" fill="#2D35C8"/>
-      </svg>
+      {_geo_logo_img(96)}
     </div>
     <div style="flex:1;padding-top:var(--space-2)">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-4)">
