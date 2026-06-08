@@ -520,9 +520,9 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
 
   <header style="margin-bottom:var(--space-12)">
     <p class="text-muted" style="margin:0 0 var(--space-3);font-size:var(--text-sm)">{now}</p>
-    <div style="display:grid;grid-template-columns:88px 1fr 56px;align-items:start;gap:var(--space-6)">
-      <div>
-        <div style="mix-blend-mode:multiply;background:transparent">{_geo_logo_img(72)}</div>
+    <div style="display:grid;grid-template-columns:80px 1fr 56px;gap:var(--space-6);align-items:start">
+      <div style="padding-top:4px">
+        {_geo_logo_img(72)}
       </div>
       <div>
         <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
@@ -536,11 +536,11 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
           </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:flex-end;padding-top:var(--space-1)">
+      <div style="display:flex;justify-content:flex-end;padding-top:6px">
         <img
           src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
           alt="{domain} logo"
-          style="width:44px;height:44px;object-fit:contain;mix-blend-mode:luminosity;opacity:0.85;border-radius:var(--radius-sm)"
+          style="width:44px;height:44px;object-fit:contain"
           onerror="this.style.display='none'"
         />
       </div>
