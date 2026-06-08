@@ -505,46 +505,51 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
 </head>
 <body>
 
-  <header style="margin-bottom:var(--space-12)">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-8)">
-      <svg width="48" height="48" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-        <!-- book wings -->
-        <polygon points="100,10 10,80 10,30 100,10" fill="#2D35C8"/>
-        <polygon points="100,10 190,80 190,30 100,10" fill="#1A1B6E"/>
-        <!-- left page face -->
-        <polygon points="10,80 100,10 100,130 10,130" fill="#2D35C8"/>
-        <!-- right page face -->
-        <polygon points="190,80 100,10 100,130 190,130" fill="#1A1B6E"/>
-        <!-- spine -->
-        <rect x="88" y="130" width="24" height="70" fill="#2D35C8"/>
+  <header style="margin-bottom:var(--space-12);display:flex;align-items:flex-start;gap:var(--space-8)">
+    <div style="flex-shrink:0">
+      <svg width="96" height="96" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- left wing outer edge -->
+        <polygon points="100,8 8,75 8,28" fill="#2D35C8"/>
+        <!-- right wing outer edge -->
+        <polygon points="100,8 192,75 192,28" fill="#1A1B6E"/>
+        <!-- left page face (inner) -->
+        <polygon points="8,75 100,8 100,135 8,135" fill="#2D35C8"/>
+        <!-- right page face (inner, darker) -->
+        <polygon points="192,75 100,8 100,135 192,135" fill="#1A1B6E"/>
         <!-- left eye socket -->
-        <ellipse cx="55" cy="90" rx="28" ry="18" fill="#0D0D0D"/>
+        <ellipse cx="54" cy="88" rx="32" ry="22" fill="#0D0D0D"/>
         <!-- right eye socket -->
-        <ellipse cx="145" cy="90" rx="28" ry="18" fill="#0D0D0D"/>
-        <!-- left eye white -->
-        <ellipse cx="55" cy="90" rx="18" ry="11" fill="#FFFFFF"/>
-        <!-- right eye blue -->
-        <ellipse cx="145" cy="90" rx="18" ry="11" fill="#2D35C8"/>
+        <ellipse cx="146" cy="88" rx="32" ry="22" fill="#0D0D0D"/>
+        <!-- left eyeball (white) -->
+        <ellipse cx="54" cy="88" rx="20" ry="13" fill="#FFFFFF"/>
+        <!-- right eyeball (cobalt) -->
+        <ellipse cx="146" cy="88" rx="20" ry="13" fill="#2D35C8"/>
         <!-- pupils -->
-        <circle cx="55" cy="90" r="5" fill="#0D0D0D"/>
-        <circle cx="145" cy="90" r="5" fill="#0D0D0D"/>
+        <circle cx="54" cy="88" r="6" fill="#0D0D0D"/>
+        <circle cx="146" cy="88" r="6" fill="#0A0A14"/>
+        <!-- spine -->
+        <polygon points="88,135 112,135 108,210 92,210" fill="#2D35C8"/>
       </svg>
-      <img
-        src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
-        alt="{domain} logo"
-        style="width:48px;height:48px;object-fit:contain;border-radius:var(--radius-md);background:var(--color-white);padding:4px;box-shadow:var(--shadow-sm)"
-        onerror="this.style.display='none'"
-      />
     </div>
-    <p class="text-muted" style="margin:0 0 var(--space-2);font-size:var(--text-sm)">{now}</p>
-    <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
-    <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
-    <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
-      <div class="score-badge {score_class(score)}">{score}</div>
-      <div>
-        <p style="margin:0;font-size:var(--text-sm)" class="text-muted">GEO Health Score</p>
-        <p style="margin:0"><strong>{url}</strong></p>
-        <p style="margin:0" class="text-muted">{business_type}</p>
+    <div style="flex:1;padding-top:var(--space-2)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-4)">
+        <p class="text-muted" style="margin:0;font-size:var(--text-sm)">{now}</p>
+        <img
+          src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
+          alt="{domain} logo"
+          style="width:40px;height:40px;object-fit:contain;background:transparent"
+          onerror="this.style.display='none'"
+        />
+      </div>
+      <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
+      <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
+      <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
+        <div class="score-badge {score_class(score)}">{score}</div>
+        <div>
+          <p style="margin:0;font-size:var(--text-sm)" class="text-muted">GEO Health Score</p>
+          <p style="margin:0"><strong>{url}</strong></p>
+          <p style="margin:0" class="text-muted">{business_type}</p>
+        </div>
       </div>
     </div>
   </header>
