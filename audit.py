@@ -386,13 +386,121 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../design-system.css">
   <style>
-    body {{ max-width: 860px; margin: 0 auto; padding: var(--space-12) var(--space-6); }}
+    :root {{
+      --color-bg: #EDE8DC;
+      --color-navy: #1A1B6E;
+      --color-cobalt: #2D35C8;
+      --color-black: #0D0D0D;
+      --color-white: #FFFFFF;
+      --color-cobalt-10: rgba(45,53,200,0.10);
+      --color-cobalt-20: rgba(45,53,200,0.20);
+      --color-navy-10: rgba(26,27,110,0.10);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: system-ui, -apple-system, sans-serif;
+      --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+      --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem; --text-4xl: 2.25rem; --text-5xl: 3rem;
+      --leading-tight: 1.2; --leading-normal: 1.5; --leading-loose: 1.75;
+      --weight-regular: 400; --weight-semibold: 600; --weight-bold: 700;
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+      --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+      --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(26,27,110,0.12);
+      --shadow-md: 0 4px 12px rgba(26,27,110,0.14);
+      --shadow-lg: 0 8px 28px rgba(26,27,110,0.18);
+    }}
+    *, *::before, *::after {{ box-sizing: border-box; }}
+    body {{
+      background-color: var(--color-bg);
+      color: var(--color-black);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: var(--leading-normal);
+      -webkit-font-smoothing: antialiased;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+    }}
+    h1, h2, h3, h4, h5, h6 {{
+      font-family: var(--font-serif);
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-tight);
+      color: var(--color-navy);
+    }}
+    h1 {{ font-size: var(--text-5xl); margin: 0 0 var(--space-2); }}
+    h2 {{ font-size: var(--text-3xl); margin: 0 0 var(--space-4); }}
+    a {{ color: var(--color-cobalt); }}
+    a:hover {{ color: var(--color-navy); }}
+    .display {{
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: var(--weight-bold);
+      color: var(--color-navy);
+    }}
+    .card {{
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-navy-10);
+    }}
+    .card-accent {{ border-top: 4px solid var(--color-cobalt); }}
+    .score-badge {{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px; height: 64px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-cobalt);
+      color: var(--color-white);
+      font-family: var(--font-serif);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      flex-shrink: 0;
+    }}
+    .score-high {{ background-color: var(--color-cobalt); }}
+    .score-mid  {{ background-color: var(--color-navy); }}
+    .score-low  {{ background-color: var(--color-black); }}
+    .tag {{
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background-color: var(--color-cobalt-10);
+      color: var(--color-cobalt);
+    }}
+    .tag-navy {{ background-color: var(--color-navy-10); color: var(--color-navy); }}
+    pre, code {{ font-family: 'Fira Code', 'Fira Mono', monospace; font-size: var(--text-sm); }}
+    pre {{
+      background-color: var(--color-navy);
+      color: var(--color-bg);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      overflow-x: auto;
+      line-height: var(--leading-loose);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }}
+    code {{
+      background-color: var(--color-cobalt-10);
+      color: var(--color-navy);
+      padding: 0.1em 0.35em;
+      border-radius: var(--radius-sm);
+    }}
+    pre code {{ background: none; color: inherit; padding: 0; }}
+    .text-muted {{ color: rgba(13,13,13,0.5); }}
+    .serif {{ font-family: var(--font-serif); }}
     table {{ width: 100%; border-collapse: collapse; font-size: var(--text-sm); }}
     th, td {{ text-align: left; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-navy-10); }}
     th {{ font-family: var(--font-serif); font-weight: var(--weight-semibold); color: var(--color-navy); }}
     section {{ margin-bottom: var(--space-12); }}
+    p {{ margin: 0 0 var(--space-4); line-height: var(--leading-normal); }}
   </style>
 </head>
 <body>
