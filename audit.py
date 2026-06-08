@@ -518,20 +518,12 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
 </head>
 <body>
 
-  <header style="margin-bottom:var(--space-12);display:flex;align-items:flex-start;gap:var(--space-8)">
-    <div style="flex-shrink:0">
-      {_geo_logo_img(96)}
+  <header style="margin-bottom:var(--space-12);display:grid;grid-template-columns:96px 1fr 96px;align-items:start;gap:var(--space-6)">
+    <div style="padding-top:var(--space-2)">
+      <div style="mix-blend-mode:multiply">{_geo_logo_img(80)}</div>
     </div>
-    <div style="flex:1;padding-top:var(--space-2)">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-4)">
-        <p class="text-muted" style="margin:0;font-size:var(--text-sm)">{now}</p>
-        <img
-          src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
-          alt="{domain} logo"
-          style="width:40px;height:40px;object-fit:contain;background:transparent"
-          onerror="this.style.display='none'"
-        />
-      </div>
+    <div>
+      <p class="text-muted" style="margin:0 0 var(--space-2);font-size:var(--text-sm)">{now}</p>
       <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
       <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
       <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
@@ -542,6 +534,14 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
           <p style="margin:0" class="text-muted">{business_type}</p>
         </div>
       </div>
+    </div>
+    <div style="padding-top:var(--space-2);display:flex;justify-content:flex-end">
+      <img
+        src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
+        alt="{domain} logo"
+        style="width:48px;height:48px;object-fit:contain;mix-blend-mode:multiply"
+        onerror="this.style.display='none'"
+      />
     </div>
   </header>
 
