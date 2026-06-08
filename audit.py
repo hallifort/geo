@@ -315,6 +315,167 @@ def render_report(url: str, business_type: str, audit: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
+# HTML report renderer
+# ---------------------------------------------------------------------------
+
+def score_class(score: int) -> str:
+    if score >= 70:
+        return "score-high"
+    if score >= 40:
+        return "score-mid"
+    return "score-low"
+
+
+def render_html_report(url: str, business_type: str, audit: dict) -> str:
+    domain = urlparse(url).netloc
+    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+    score = audit.get("overall_geo_score", 0)
+    es = audit.get("entity_signals", {})
+    ms = audit.get("meta_signals", {})
+
+    coverage_icon = {"well-covered": "✅", "partially-covered": "⚠️", "not-covered": "❌"}
+    priority_label = {"high": "🔴 High", "medium": "🟡 Medium", "low": "🟢 Low"}
+
+    def tag(value: str) -> str:
+        cls = "tag-navy" if value in ("present", "well-covered") else "tag"
+        return f'<span class="tag {cls}">{value}</span>'
+
+    json_ld_sections = ""
+    for i, addition in enumerate(audit.get("json_ld_additions", []), 1):
+        pri = addition.get("priority", "")
+        code = json.dumps(addition.get("code", {}), indent=2)
+        json_ld_sections += f"""
+        <div class="card card-accent" style="margin-bottom:var(--space-6)">
+          <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+            <span class="tag">{priority_label.get(pri, pri)}</span>
+            <strong class="serif">Addition {i}</strong>
+          </div>
+          <p style="margin:0 0 var(--space-4)"><strong>Gap addressed:</strong> {addition.get("gap", "")}</p>
+          <pre><code>&lt;script type="application/ld+json"&gt;\n{code}\n&lt;/script&gt;</code></pre>
+        </div>"""
+
+    faq_sections = ""
+    for faq in audit.get("faq_blocks", []):
+        faq_sections += f"""
+        <div class="card" style="margin-bottom:var(--space-4)">
+          <p style="margin:0 0 var(--space-2)"><strong class="serif" style="color:var(--color-navy)">Q: {faq.get("question", "")}</strong></p>
+          <p style="margin:0">A: {faq.get("answer", "")}</p>
+        </div>"""
+
+    question_rows = ""
+    for qc in audit.get("question_coverage", []):
+        icon = coverage_icon.get(qc.get("coverage", ""), "?")
+        question_rows += f"""
+          <tr>
+            <td>{qc.get("question", "")}</td>
+            <td>{icon} {qc.get("coverage", "")}</td>
+            <td>{qc.get("note", "")}</td>
+          </tr>"""
+
+    schema_missing = "".join(
+        f'<span class="tag" style="margin:2px">{s}</span>' for s in audit.get("schema_missing", [])
+    )
+    schema_present = ", ".join(audit.get("schema_present", [])) or "None detected"
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEO Audit — {domain}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system.css">
+  <style>
+    body {{ max-width: 860px; margin: 0 auto; padding: var(--space-12) var(--space-6); }}
+    table {{ width: 100%; border-collapse: collapse; font-size: var(--text-sm); }}
+    th, td {{ text-align: left; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-navy-10); }}
+    th {{ font-family: var(--font-serif); font-weight: var(--weight-semibold); color: var(--color-navy); }}
+    section {{ margin-bottom: var(--space-12); }}
+  </style>
+</head>
+<body>
+
+  <header style="margin-bottom:var(--space-12)">
+    <p class="text-muted" style="margin:0 0 var(--space-2);font-size:var(--text-sm)">{now}</p>
+    <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
+    <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
+    <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
+      <div class="score-badge {score_class(score)}">{score}</div>
+      <div>
+        <p style="margin:0;font-size:var(--text-sm)" class="text-muted">GEO Health Score</p>
+        <p style="margin:0"><strong>{url}</strong></p>
+        <p style="margin:0" class="text-muted">{business_type}</p>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Executive Summary</h2>
+    <p>{audit.get("summary", "")}</p>
+  </section>
+
+  <section>
+    <h2>Schema.org Coverage</h2>
+    <p><strong>Present:</strong> {schema_present}</p>
+    <p><strong>Missing / recommended:</strong></p>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">{schema_missing}</div>
+  </section>
+
+  <section>
+    <h2>Entity &amp; Authority Signals</h2>
+    <table>
+      <thead><tr><th>Signal</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Organisation identity</td><td>{es.get("org_identity", "—")}</td></tr>
+        <tr><td>sameAs links</td><td>{es.get("sameAs_links", "—")}</td></tr>
+        <tr><td>Authority markers</td><td>{es.get("authority_markers", "—")}</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Meta Signals</h2>
+    <table>
+      <thead><tr><th>Signal</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>datePublished</td><td>{tag(ms.get("datePublished", "—"))}</td></tr>
+        <tr><td>author</td><td>{tag(ms.get("author", "—"))}</td></tr>
+        <tr><td>canonical</td><td>{tag(ms.get("canonical", "—"))}</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Top-Question Coverage</h2>
+    <table>
+      <thead><tr><th>Question</th><th>Coverage</th><th>Note</th></tr></thead>
+      <tbody>{question_rows}</tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Recommended JSON-LD Additions</h2>
+    <p class="text-muted">Paste each block inside a <code>&lt;script type="application/ld+json"&gt;</code> tag in your <code>&lt;head&gt;</code>. Purely additive — no existing HTML or CSS changes required.</p>
+    {json_ld_sections}
+  </section>
+
+  <section>
+    <h2>Citation-Ready FAQ Blocks</h2>
+    <p class="text-muted">Paste these as a visible Q&amp;A section on your page. Purely additive.</p>
+    {faq_sections}
+  </section>
+
+  <footer style="margin-top:var(--space-16);padding-top:var(--space-6);border-top:1px solid var(--color-navy-10)">
+    <p class="text-muted" style="font-size:var(--text-sm)">Generated by the GEO Audit Tool — read-only, additive recommendations only.</p>
+  </footer>
+
+</body>
+</html>"""
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -365,6 +526,10 @@ def main():
         out_path = OUTPUTS_DIR / f"{slug(url)}.md"
         out_path.write_text(report_md, encoding="utf-8")
         print(f"  Report written: {out_path}")
+
+        html_path = OUTPUTS_DIR / f"{slug(url)}.html"
+        html_path.write_text(render_html_report(url, business_type, audit), encoding="utf-8")
+        print(f"  HTML report:    {html_path}")
 
         # Also save raw audit JSON for debugging
         json_path = OUTPUTS_DIR / f"{slug(url)}.json"
