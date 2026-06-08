@@ -518,30 +518,32 @@ def render_html_report(url: str, business_type: str, audit: dict) -> str:
 </head>
 <body>
 
-  <header style="margin-bottom:var(--space-12);display:grid;grid-template-columns:96px 1fr 96px;align-items:start;gap:var(--space-6)">
-    <div style="padding-top:var(--space-2)">
-      <div style="mix-blend-mode:multiply">{_geo_logo_img(80)}</div>
-    </div>
-    <div>
-      <p class="text-muted" style="margin:0 0 var(--space-2);font-size:var(--text-sm)">{now}</p>
-      <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
-      <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
-      <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
-        <div class="score-badge {score_class(score)}">{score}</div>
-        <div>
-          <p style="margin:0;font-size:var(--text-sm)" class="text-muted">GEO Health Score</p>
-          <p style="margin:0"><strong>{url}</strong></p>
-          <p style="margin:0" class="text-muted">{business_type}</p>
+  <header style="margin-bottom:var(--space-12)">
+    <p class="text-muted" style="margin:0 0 var(--space-3);font-size:var(--text-sm)">{now}</p>
+    <div style="display:grid;grid-template-columns:88px 1fr 56px;align-items:start;gap:var(--space-6)">
+      <div>
+        <div style="mix-blend-mode:multiply;background:transparent">{_geo_logo_img(72)}</div>
+      </div>
+      <div>
+        <h1 style="margin:0 0 var(--space-2)">GEO Audit Report</h1>
+        <p class="display" style="font-size:var(--text-2xl);margin:0 0 var(--space-6)">{domain}</p>
+        <div style="display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap">
+          <div class="score-badge {score_class(score)}">{score}</div>
+          <div>
+            <p style="margin:0;font-size:var(--text-sm)" class="text-muted">GEO Health Score</p>
+            <p style="margin:0"><strong>{url}</strong></p>
+            <p style="margin:0" class="text-muted">{business_type}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="padding-top:var(--space-2);display:flex;justify-content:flex-end">
-      <img
-        src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
-        alt="{domain} logo"
-        style="width:48px;height:48px;object-fit:contain;mix-blend-mode:multiply"
-        onerror="this.style.display='none'"
-      />
+      <div style="display:flex;justify-content:flex-end;padding-top:var(--space-1)">
+        <img
+          src="https://www.google.com/s2/favicons?domain={domain}&sz=64"
+          alt="{domain} logo"
+          style="width:44px;height:44px;object-fit:contain;mix-blend-mode:luminosity;opacity:0.85;border-radius:var(--radius-sm)"
+          onerror="this.style.display='none'"
+        />
+      </div>
     </div>
   </header>
 
