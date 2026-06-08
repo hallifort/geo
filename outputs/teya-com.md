@@ -2,14 +2,14 @@
 
 **URL:** https://teya.com  
 **Business type:** SaaS  
-**Audited:** 2026-06-03 08:20 UTC  
+**Audited:** 2026-06-08 22:19 UTC  
 **GEO Score:** 🔴 22/100
 
 ---
 
 ## Executive Summary
 
-Teya's homepage has minimal structured data and lacks the schema markup, entity signals, and FAQ content that AI engines need to confidently cite it. While the page communicates core value propositions clearly in prose, the absence of Organization, Product, and FAQPage schema means AI engines cannot reliably extract and attribute key facts about Teya's identity, pricing, or geographic availability. Adding targeted JSON-LD and FAQ blocks would materially improve Teya's chances of being surfaced in AI-generated answers about payment solutions for small businesses.
+Teya's homepage conveys its core value proposition but lacks structured data entirely, making it nearly invisible to AI engines that rely on schema signals for entity resolution. Key questions around fees, geographic availability, and sign-up process are either partially or not covered in a machine-readable or clearly citable format. Adding Organisation, Product, and FAQ schema—plus explicit FAQ copy—would significantly improve Teya's chances of being cited in AI-generated responses.
 
 ---
 
@@ -21,10 +21,10 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 - `Organization`
 - `FAQPage`
 - `Product`
-- `SoftwareApplication`
+- `Service`
 - `FinancialProduct`
-- `Review`
 - `AggregateRating`
+- `Review`
 - `WebSite`
 - `BreadcrumbList`
 
@@ -34,9 +34,9 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 | Signal | Assessment |
 |--------|------------|
-| Organisation identity | Weak. The page names the company as Teya and states it has been empowering small local businesses since 2019, but provides no registered company name, company number, headquarters address, or founding narrative that AI engines can anchor to. |
-| sameAs links | Absent. No links to LinkedIn, Crunchbase, Companies House, Wikipedia, or other authoritative external profiles are present in the scraped content, making cross-platform entity resolution difficult for AI models. |
-| Authority markers | Partial. Trust signals exist (Trustpilot rating of 4.3/5 from 1,259 reviews, 75,000+ active members, £68M+ in Cash Advance issued, 609M+ transactions in 2025) but none are formalised in structured data where AI engines can reliably parse and cite them. |
+| Organisation identity | Teya is named and described as an integrated payments, funding, and business account provider founded in 2019, but no registered company name, company number, or headquarters address is present in the scraped content, weakening entity resolution for AI engines. |
+| sameAs links | No sameAs cross-platform links (LinkedIn, Crunchbase, Companies House, Wikipedia, etc.) are detectable in the scraped content, making it difficult for AI engines to corroborate Teya's identity across the web. |
+| Authority markers | Trustpilot rating of 4.3/5 from 1,270 reviews is present, along with social proof metrics (75,000+ active members, 609M+ transactions in 2025, £68M+ in Cash Advance). However, these are rendered in visual/JS components rather than structured data, limiting their citability. |
 
 ---
 
@@ -54,12 +54,12 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 | Question | Coverage | Note |
 |----------|----------|------|
-| What is Teya? | ⚠️ partially-covered | The headline and subheadline describe Teya as an integrated payments, funding and Business Account solution for local businesses founded in 2019, but there is no concise definitional paragraph an AI engine can cleanly extract as a single citable answer. |
-| What payment solutions does Teya offer? | ⚠️ partially-covered | Products like card machines, Tap to Pay, Pay by Link, split bills, and EPOS integrations are mentioned across the page but are scattered in feature tiles rather than consolidated in a scannable, citable list. |
-| How does Teya help small businesses? | ✅ well-covered | Multiple features (next-day settlements, cash advance, real-time sales tracking, lifetime warranty, human support) and customer testimonials directly address this, giving AI engines reasonable citation material. |
-| What are Teya's fees? | ⚠️ partially-covered | The Start plan rate of 1.59% for consumer cards and a £29.99 monthly fee for turnover under £2,500 are mentioned, but the full fee schedule is truncated and not structured in a way AI engines can easily parse. |
-| Is Teya available in my country? | ❌ not-covered | No geographic availability information, list of supported countries, or regulatory context is present anywhere in the scraped content. |
-| How do I sign up for Teya? | ❌ not-covered | There is a 'Join Us' CTA and a pricing link but no step-by-step onboarding explanation, required documents, or sign-up process description that an AI engine could summarise. |
+| What is Teya? | ⚠️ partially-covered | The headline and sub-headline describe Teya as an integrated payments, funding, and Business Account solution for local businesses, but there is no concise, standalone definitional paragraph an AI can cleanly extract and quote. |
+| What payment solutions does Teya offer? | ⚠️ partially-covered | Products such as card machines, Tap to Pay, Pay by Link, Business Account, and Cash Advance are listed, but they are fragmented across carousels and feature tiles rather than a structured, scannable list. |
+| How does Teya help small businesses? | ⚠️ partially-covered | Key benefits like next-day settlements, no hidden fees, human support, and cashback are mentioned, and customer testimonials support this, but there is no consolidated paragraph addressing the question directly. |
+| What are Teya's fees? | ⚠️ partially-covered | A 1.59% rate for consumer cards on the Start plan and a £29.99 monthly fee condition are visible, but the full fee table is truncated and not structured in a way AI engines can reliably parse or cite. |
+| Is Teya available in my country? | ❌ not-covered | No geographic availability information appears in the scraped content. Customer testimonials reference London/UK but no explicit country or region list is provided. |
+| How do I sign up for Teya? | ❌ not-covered | CTAs such as 'Join Us' and 'Check our offers' are present but no step-by-step sign-up process, eligibility criteria, or onboarding description exists on the page. |
 
 ---
 
@@ -70,7 +70,7 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 ### Addition 1 — 🔴 High Priority
 
-**Gap addressed:** Organisation identity, authority markers, and sameAs entity links are entirely absent, preventing AI engines from reliably identifying and citing Teya as a known entity.
+**Gap addressed:** Organisation identity and entity disambiguation — critical for AI engines to resolve who Teya is, where they operate, and how to cross-reference them
 
 ```html
 <script type="application/ld+json">
@@ -81,27 +81,30 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
   "url": "https://www.teya.com",
   "logo": "https://www.teya.com/favicon.ico",
   "foundingDate": "2019",
-  "description": "Teya is a financial technology company founded in 2019 that provides integrated payment solutions, business accounts, and funding products to small and local businesses. Its offerings include card machines, Tap to Pay, Pay by Link, Cash Advance, and a Business Debit Account with 0.5% cashback.",
+  "description": "Teya is a financial technology company founded in 2019 that provides integrated payment solutions, business accounts, and funding products to small and local businesses. Its suite includes card machines, Tap to Pay, Pay by Link, a Business Debit Account with 0.5% cashback, and a Cash Advance product.",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United Kingdom"
+  },
   "numberOfEmployees": {
     "@type": "QuantitativeValue",
     "description": "Serves 75,000+ active business members"
   },
-  "areaServed": "GB",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer support",
-    "url": "https://www.teya.com/contact-sales",
-    "availableLanguage": "English"
-  },
-  "sameAs": [
-    "https://uk.trustpilot.com/review/teya.com"
-  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.3",
     "bestRating": "5",
-    "ratingCount": "1259",
-    "reviewCount": "1259"
+    "ratingCount": "1270",
+    "reviewAspect": "Trustpilot"
+  },
+  "sameAs": [
+    "https://uk.trustpilot.com/review/teya.com"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "areaServed": "GB",
+    "availableLanguage": "English"
   }
 }
 </script>
@@ -109,7 +112,7 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 ### Addition 2 — 🔴 High Priority
 
-**Gap addressed:** Top user questions about Teya's identity, fees, geographic availability, and sign-up process are not covered in any machine-readable FAQ format, reducing AI citation probability for high-intent queries.
+**Gap addressed:** FAQPage schema to directly answer the top questions AI engines are asked about Teya — fees, availability, sign-up, and product scope
 
 ```html
 <script type="application/ld+json">
@@ -122,7 +125,7 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
       "name": "What is Teya?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Teya is a financial technology company founded in 2019 that offers integrated payment, funding, and business account solutions designed specifically for small and local businesses. Its platform combines card machines, Tap to Pay, Pay by Link, real-time sales analytics, Cash Advance funding, and a Business Debit Account with 0.5% cashback \u2014 all in a single ecosystem. Teya serves over 75,000 active business members and has processed more than 609 million transactions in 2025."
+        "text": "Teya is a UK-based financial technology company founded in 2019 that offers integrated payment solutions, a Business Account, and flexible funding for small and local businesses. Its products include card machines, Tap to Pay, Pay by Link, and a Cash Advance facility, all managed through a single app and web portal."
       }
     },
     {
@@ -130,23 +133,7 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
       "name": "What are Teya's fees?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Teya uses a membership plan structure based on monthly card turnover. The Start plan, for businesses with up to \u00a37,500 in monthly card turnover, charges 1.59% on consumer card transactions. A \u00a329.99 monthly fee applies when turnover falls below \u00a32,500. Teya advertises simple, transparent rates with no hidden fees. Businesses with higher turnover can contact Teya's sales team for a custom plan."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I sign up for Teya?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "To sign up for Teya, visit teya.com/pricing to select a membership plan that matches your monthly card turnover. You can choose a card machine such as the Teya Pro, complete the online application, and benefit from a quick set-up process. Teya offers next-day settlements and human support to help new members get started. For high-volume businesses, a specialist consultation is available via teya.com/contact-sales."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What payment solutions does Teya offer?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Teya offers a comprehensive suite of payment solutions including countertop and portable card machines, Teya Tap (turning a smartphone into a card reader), Pay by Link for remote payments, split bill functionality, and 50+ EPOS integrations. Payments can be settled the next business day or instantly (subject to eligibility). All payment activity is tracked in real-time through the Teya App and Web Portal."
+        "text": "Teya operates a membership-based pricing model tied to monthly card turnover. The Start plan covers turnovers of \u00a30\u2013\u00a37,500 and charges 1.59% on consumer card transactions. A \u00a329.99 monthly fee applies when card turnover is under \u00a32,500. Teya states there are no hidden fees, and custom plans are available for higher-turnover businesses."
       }
     },
     {
@@ -154,7 +141,15 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
       "name": "Is Teya available in my country?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Teya currently operates in the United Kingdom, with its customer support team based in the UK. The company serves over 75,000 small and local businesses. For information on availability in other countries, prospective customers should contact Teya directly at teya.com."
+        "text": "Teya currently serves businesses in the United Kingdom. Its customer support team is UK-based. Businesses outside the UK should contact Teya directly to enquire about availability in other regions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I sign up for Teya?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "To sign up for Teya, visit teya.com/pricing to select a membership plan based on your monthly card turnover, then choose a card machine. Setup is described as quick, and settlements begin as soon as the next business day. You can also speak with a Teya specialist for a custom plan."
       }
     },
     {
@@ -162,7 +157,15 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
       "name": "How does Teya help small businesses?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Teya helps small businesses by consolidating payments, funding, and expense management into one platform. Key benefits include next-day or instant settlements for improved cash flow, Cash Advance funding (with over \u00a368 million issued to date) repaid flexibly from card sales, a Business Debit Account with 0.5% cashback, real-time sales tracking, 50+ EPOS integrations, lifetime warranty on card machines, and UK-based human support available when needed."
+        "text": "Teya helps small and local businesses by combining card payments, a business debit account with 0.5% cashback, real-time sales tracking, and access to a Cash Advance of up to \u00a368 million distributed to date. Key benefits include next-day settlements, no hidden fees, lifetime warranty on hardware, 50+ EPOS integrations, and UK-based human customer support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What payment solutions does Teya offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Teya offers a full suite of payment solutions including physical card terminals (Teya Pro), a Tap to Pay mobile app (Teya Tap) that turns a smartphone into a card machine, Pay by Link for remote payments, split bill functionality, tipping, and instant or next-day settlements. All solutions are managed through the Teya App and web portal."
       }
     }
   ]
@@ -172,41 +175,30 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 ### Addition 3 — 🟡 Medium Priority
 
-**Gap addressed:** Teya's core financial products (card machines, Business Account, Cash Advance) lack Product or FinancialProduct schema, meaning AI engines cannot surface structured product details, pricing, or feature comparisons when users ask about specific Teya offerings.
+**Gap addressed:** FinancialProduct / Service schema to help AI engines understand and cite Teya's specific financial products — especially Cash Advance and Business Account
 
 ```html
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Teya Products and Services",
-  "description": "Teya's integrated suite of payment, funding, and business account products for small businesses.",
+  "name": "Teya Financial Products and Services",
+  "description": "Core products offered by Teya to small and local businesses in the UK",
   "itemListElement": [
     {
       "@type": "ListItem",
       "position": 1,
       "item": {
-        "@type": "Product",
-        "name": "Teya Card Machines",
-        "description": "Physical payment terminals including the Teya Pro, designed for fast in-person card payments with industry-leading transaction speeds, split bill functionality, built-in calculator, tipping, and lifetime warranty covering theft and water damage.",
-        "brand": {
-          "@type": "Brand",
-          "name": "Teya"
+        "@type": "FinancialProduct",
+        "name": "Teya Cash Advance",
+        "description": "A flexible, fast, and transparent business funding product repaid directly from card machine sales. Teya has provided over \u00a368 million in Cash Advances to small businesses.",
+        "url": "https://www.teya.com/funding",
+        "provider": {
+          "@type": "Organization",
+          "name": "Teya",
+          "url": "https://www.teya.com"
         },
-        "url": "https://www.teya.com/card-machines",
-        "offers": {
-          "@type": "Offer",
-          "priceCurrency": "GBP",
-          "price": "179.00",
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "description": "Teya Pro card machine, plus VAT. Transaction rate from 1.59% for consumer cards on the Start plan."
-          },
-          "seller": {
-            "@type": "Organization",
-            "name": "Teya"
-          }
-        }
+        "areaServed": "GB"
       }
     },
     {
@@ -214,29 +206,37 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
       "position": 2,
       "item": {
         "@type": "FinancialProduct",
-        "name": "Teya Cash Advance",
-        "description": "Flexible business funding product where repayments are taken automatically as a percentage of daily card machine sales. Over \u00a368 million has been advanced to Teya's small business customers to date.",
-        "brand": {
-          "@type": "Brand",
-          "name": "Teya"
+        "name": "Teya Business Account",
+        "description": "A business debit account with 0.5% cashback on all spending, the ability to create multiple cards with individual limits, and seamless integration with Teya payment terminals.",
+        "url": "https://www.teya.com/business-account",
+        "provider": {
+          "@type": "Organization",
+          "name": "Teya",
+          "url": "https://www.teya.com"
         },
-        "url": "https://www.teya.com/funding",
-        "feesAndCommissionsSpecification": "Repayments are deducted directly from card machine sales; no fixed monthly repayment required."
+        "areaServed": "GB"
       }
     },
     {
       "@type": "ListItem",
       "position": 3,
       "item": {
-        "@type": "FinancialProduct",
-        "name": "Teya Business Account",
-        "description": "A business debit account that integrates directly with Teya's payment terminals, allowing users to create multiple cards with individual spending limits and earn 0.5% cashback on all business spending.",
-        "brand": {
-          "@type": "Brand",
-          "name": "Teya"
+        "@type": "Service",
+        "name": "Teya Card Machines",
+        "description": "Physical and mobile card payment terminals for in-person payments, including the Teya Pro device and Teya Tap app. Features include contactless payments, split bills, tipping, and a lifetime warranty covering theft and water damage.",
+        "url": "https://www.teya.com/card-machines",
+        "provider": {
+          "@type": "Organization",
+          "name": "Teya",
+          "url": "https://www.teya.com"
         },
-        "url": "https://www.teya.com/business-account",
-        "feesAndCommissionsSpecification": "0.5% cashback on all card spending. Included within Teya membership plans."
+        "areaServed": "GB",
+        "offers": {
+          "@type": "Offer",
+          "price": "179",
+          "priceCurrency": "GBP",
+          "description": "Teya Pro card machine starting price, plus VAT"
+        }
       }
     }
   ]
@@ -253,15 +253,15 @@ Teya's homepage has minimal structured data and lacks the schema markup, entity 
 
 **Q: Is Teya available in my country?**
 
-A: Teya currently operates in the United Kingdom, where its customer support team is also based. The platform serves over 75,000 small and local businesses across the UK. Teya's pricing, card machines, and Business Account are structured around GBP transactions and UK regulatory requirements. Businesses outside the UK should contact Teya directly at teya.com to enquire about availability in other markets.
+A: Teya currently operates in the United Kingdom, where it serves over 75,000 small and local businesses. Its customer support team is UK-based. Businesses outside the UK should visit teya.com or contact Teya directly to enquire about availability in other markets.
 
 **Q: How do I sign up for Teya?**
 
-A: Signing up for Teya starts at teya.com/pricing, where you select a membership plan based on your monthly card turnover. You then choose a card machine — such as the Teya Pro at £179 plus VAT — and complete the online registration. Teya is designed for quick set-up, and new members receive access to next-day settlements, the Teya App for real-time sales tracking, and UK-based human support from day one. Businesses with higher turnover can request a custom plan by speaking with a specialist.
+A: Signing up for Teya starts at teya.com/pricing, where you select a membership plan based on your monthly card turnover. You then choose a card machine — such as the Teya Pro (from £179 + VAT) — and complete a quick setup process. Settlements begin from the next business day, and UK-based support is available throughout onboarding. Businesses with higher turnover can speak with a specialist for a custom plan.
 
 **Q: What are Teya's fees?**
 
-A: Teya's fees are structured around membership plans tied to monthly card turnover. The Start plan (up to £7,500/month in card turnover) charges 1.59% on consumer card transactions. A £29.99 monthly fee applies if turnover falls below £2,500 in a given month. Teya advertises no hidden fees and simple, transparent rates. Businesses with turnover exceeding the standard plan thresholds can contact Teya's sales team for a tailored pricing arrangement.
+A: Teya uses a transparent, membership-based pricing model. The Start plan applies to businesses with up to £7,500 in monthly card turnover and charges 1.59% on consumer card transactions. A £29.99 monthly fee applies if turnover falls below £2,500. Teya advertises no hidden fees, and custom pricing is available for higher-volume businesses via a dedicated sales team.
 
 ---
 
