@@ -1,0 +1,262 @@
+/* GEO Design System
+   Primary font: Playfair Display (serif)
+   Import: https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap
+*/
+
+/* ── Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Color palette — sourced from brand mark */
+  --color-bg:           #EDE8DC; /* off-white / cream background */
+  --color-navy:         #1A1B6E; /* deep navy — structural dark */
+  --color-cobalt:       #2D35C8; /* electric cobalt — primary accent */
+  --color-black:        #0D0D0D; /* near-black for shadows / text */
+  --color-white:        #FFFFFF;
+
+  /* Semantic aliases */
+  --color-primary:      var(--color-cobalt);
+  --color-primary-dark: var(--color-navy);
+  --color-surface:      var(--color-bg);
+  --color-text:         var(--color-black);
+  --color-text-inverse: var(--color-white);
+
+  /* Tints — cobalt at reduced opacity for subtle fills */
+  --color-cobalt-10:    rgba(45, 53, 200, 0.10);
+  --color-cobalt-20:    rgba(45, 53, 200, 0.20);
+  --color-navy-10:      rgba(26, 27, 110, 0.10);
+
+  /* Typography */
+  --font-serif:         'Playfair Display', Georgia, serif;
+  --font-sans:          system-ui, -apple-system, sans-serif;
+
+  --text-xs:    0.75rem;   /* 12px */
+  --text-sm:    0.875rem;  /* 14px */
+  --text-base:  1rem;      /* 16px */
+  --text-lg:    1.125rem;  /* 18px */
+  --text-xl:    1.25rem;   /* 20px */
+  --text-2xl:   1.5rem;    /* 24px */
+  --text-3xl:   1.875rem;  /* 30px */
+  --text-4xl:   2.25rem;   /* 36px */
+  --text-5xl:   3rem;      /* 48px */
+
+  --leading-tight:  1.2;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-loose:  1.75;
+
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing (8-point grid) */
+  --space-1:   0.25rem;  /*  4px */
+  --space-2:   0.5rem;   /*  8px */
+  --space-3:   0.75rem;  /* 12px */
+  --space-4:   1rem;     /* 16px */
+  --space-5:   1.25rem;  /* 20px */
+  --space-6:   1.5rem;   /* 24px */
+  --space-8:   2rem;     /* 32px */
+  --space-10:  2.5rem;   /* 40px */
+  --space-12:  3rem;     /* 48px */
+  --space-16:  4rem;     /* 64px */
+  --space-20:  5rem;     /* 80px */
+  --space-24:  6rem;     /* 96px */
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-full: 9999px;
+
+  /* Shadows — navy-tinted */
+  --shadow-sm:  0 1px 3px rgba(26, 27, 110, 0.12);
+  --shadow-md:  0 4px 12px rgba(26, 27, 110, 0.14);
+  --shadow-lg:  0 8px 28px rgba(26, 27, 110, 0.18);
+
+  /* Transitions */
+  --ease-default: 150ms ease;
+  --ease-spring:  200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Base reset ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-navy);
+}
+
+h1 { font-size: var(--text-5xl); }
+h2 { font-size: var(--text-4xl); }
+h3 { font-size: var(--text-3xl); }
+h4 { font-size: var(--text-2xl); }
+h5 { font-size: var(--text-xl); }
+h6 { font-size: var(--text-lg); }
+
+.display {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-bold);
+  color: var(--color-navy);
+}
+
+a {
+  color: var(--color-cobalt);
+  text-decoration: underline;
+  transition: color var(--ease-default);
+}
+a:hover { color: var(--color-navy); }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--ease-default), color var(--ease-default), border-color var(--ease-default), box-shadow var(--ease-default);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-cobalt);
+  color: var(--color-white);
+  border-color: var(--color-cobalt);
+}
+.btn-primary:hover {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-cobalt);
+  border-color: var(--color-cobalt);
+}
+.btn-secondary:hover {
+  background-color: var(--color-cobalt);
+  color: var(--color-white);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-navy);
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  background-color: var(--color-cobalt-10);
+  color: var(--color-cobalt);
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-navy-10);
+}
+
+.card-accent {
+  border-top: 4px solid var(--color-cobalt);
+}
+
+/* ── Score badge (GEO health score) ────────────────────── */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-cobalt);
+  color: var(--color-white);
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+}
+
+.score-badge.score-high   { background-color: var(--color-cobalt); }
+.score-badge.score-mid    { background-color: var(--color-navy); }
+.score-badge.score-low    { background-color: var(--color-black); }
+
+/* ── Tag / chip ─────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background-color: var(--color-cobalt-10);
+  color: var(--color-cobalt);
+}
+
+.tag-navy {
+  background-color: var(--color-navy-10);
+  color: var(--color-navy);
+}
+
+/* ── Code blocks (JSON-LD output) ───────────────────────── */
+pre, code {
+  font-family: 'Fira Code', 'Fira Mono', monospace;
+  font-size: var(--text-sm);
+}
+
+pre {
+  background-color: var(--color-navy);
+  color: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  overflow-x: auto;
+  line-height: var(--leading-loose);
+}
+
+code {
+  background-color: var(--color-cobalt-10);
+  color: var(--color-navy);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+/* ── Divider ────────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: 1px solid var(--color-navy-10);
+  margin: var(--space-8) 0;
+}
+
+/* ── Utility classes ────────────────────────────────────── */
+.text-cobalt  { color: var(--color-cobalt); }
+.text-navy    { color: var(--color-navy); }
+.text-muted   { color: rgba(13, 13, 13, 0.5); }
+.bg-cobalt    { background-color: var(--color-cobalt); }
+.bg-navy      { background-color: var(--color-navy); }
+.bg-surface   { background-color: var(--color-bg); }
+.serif        { font-family: var(--font-serif); }
+.italic       { font-style: italic; }
